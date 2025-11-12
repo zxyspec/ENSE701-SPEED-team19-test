@@ -1,0 +1,11 @@
+name: Always Pass
+
+# 触发条件：任何分支的push或PR都触发（无限制）
+on: [push, pull_request]
+
+jobs:
+  success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 永远成功的步骤
+        run: echo "This workflow always passes!"  # 仅输出一句话，无任何实际检查
