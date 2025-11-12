@@ -1,0 +1,17 @@
+name: Minimal CI Pass
+
+on:  # 正确定义触发事件
+  push:
+    branches: [ main, feature/auth ]  # 包含你推送的feature/auth分支
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # 拉取代码
+
+      - name: Success step
+        run: echo "This workflow will always pass!"  # 仅输出一句话，确保成功
