@@ -1,0 +1,20 @@
+name: 代码规范检查工作流
+on:
+  push:
+    branches: [master, feature/**]
+  pull_request:
+    branches: [master]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: 安装依赖
+        run: npm ci
+      - name: 运行 ESLint 检查
+        run: npm run lint  # 假设项目中配置了 npm run lint 命令，若为 yarn 则替换为 yarn lint
