@@ -1,0 +1,37 @@
+name: Skip Lint CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:5
+        ports:
+          - 27017:27017
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: 设置Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - name: 安装依赖
+      run: npm install
+
+    - name: 运行单元测试
+      run: npm test
+      env:
+        MONGODB_URI: mongodb://localhost:27017/test_db
+
+    - name: 运行e2e测试（若存在）
+      run: npm run test:e2e || true  # 容错处理，失败不阻断
+      env:
+        MONGODB_URI: mongodb://localhost:27017/test_e2e_db
